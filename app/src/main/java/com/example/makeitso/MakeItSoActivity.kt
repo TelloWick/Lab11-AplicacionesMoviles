@@ -21,6 +21,9 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.ExperimentalMaterialApi
 import dagger.hilt.android.AndroidEntryPoint
+import android.util.Log
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 
 // MakeItSoActivity starts the first composable, which uses material cards that are still experimental.
 // TODO: Update material dependency and experimental annotations once the API stabilizes.
@@ -30,6 +33,18 @@ class MakeItSoActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    setContent { MakeItSoApp() }
+    Firebase.messaging.token.addOnCompleteListener { task ->
+      if (!task.isSuccessful) {
+        Log.e("FCM_TOKEN", "Error obteniendo token")
+        return@addOnCompleteListener
+      }
+
+      val token = task.result
+      Log.d("FCM_TOKEN", token)
+    }
+
+    setContent {
+      MakeItSoApp()
+    }
   }
 }

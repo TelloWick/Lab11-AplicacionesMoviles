@@ -59,7 +59,7 @@ class MakeItSoMessagingService : FirebaseMessagingService() {
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // FCM registration token to your app server.
-        Log.d("FCM","New token: $token")
+        Log.d("FCM_TOKEN", token)
     }
 
     companion object {
